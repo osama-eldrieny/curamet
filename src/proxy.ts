@@ -6,10 +6,17 @@ export function proxy(request: NextRequest) {
   const hasLocale = locales.some(
     (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`),
   );
+  // bare /en or /sv forwards to Theme 1 (the site only has three themes)
+  const bare = locales.find((l) => pathname === `/${l}` || pathname === `/${l}/`);
+  if (bare) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${bare}/theme-1`;
+    return NextResponse.redirect(url);
+  }
   if (hasLocale) return;
 
   const url = request.nextUrl.clone();
-  url.pathname = `/${defaultLocale}${pathname === "/" ? "" : pathname}`;
+  url.pathname = `/${defaultLocale}${pathname === "/" ? "/theme-1" : pathname}`;
   return NextResponse.redirect(url);
 }
 
