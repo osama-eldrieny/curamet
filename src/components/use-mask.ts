@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const NEAR = 240; // px from the text at which the circle starts growing
 const MIN = 36;
 const MAX = 420;
@@ -25,8 +26,8 @@ export function useMaskReveal() {
   const onPointerLeave = () => setSize(MIN);
 
   const layerStyle = {
-    maskImage: "url(/mask.svg)",
-    WebkitMaskImage: "url(/mask.svg)",
+    maskImage: `url(${BASE}/mask.svg)`,
+    WebkitMaskImage: `url(${BASE}/mask.svg)`,
     maskRepeat: "no-repeat",
     WebkitMaskRepeat: "no-repeat",
     WebkitMaskPosition: `${pos.x - size / 2}px ${pos.y - size / 2}px`,
